@@ -14,9 +14,12 @@ import { formatCurrency } from './utils';
 
 
 import customers from '../../../scripts/customers';
-import invoices from '../../../scripts/invoices';
+import  invoicesData  from '../../../scripts/invoices';
 import revenue from '../../../scripts/revenue';
 import users from '../../../scripts/users';
+
+
+
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
@@ -55,6 +58,14 @@ export async function fetchLatestInvoices() {
     //   amount: formatCurrency(invoice.amount),
     // }));
     // return latestInvoices;
+
+    console.log('Fetching Invoices data...');
+    const data = invoicesData.modifiedInvoicesRaw;
+     const latestInvoices = data.map((invoice) => ({
+       ...invoice,
+       amount: formatCurrency(invoice.amount),
+     }));
+    return latestInvoices;
 
   } catch (error) {
     console.error('Database Error:', error);

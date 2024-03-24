@@ -33,7 +33,7 @@ export default function Home() {
         {/* Add Hero Images Here */}
 
         <Image
-        src="/logo-desktop.png"
+        src="/hero-desktop.png"
         width={1000}
         height={760}
         className="hidden md:block"
