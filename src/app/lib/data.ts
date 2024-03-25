@@ -261,8 +261,37 @@ export async function fetchInvoiceById(id: string) {
     //   // Convert amount from cents to dollars
     //   amount: invoice.amount / 100,
     // }));
+    //return invoice[0];
 
-    // return invoice[0];
+    
+
+  
+    const invoice = invoicesData.invoices.find(invoice => invoice.id === id);
+
+
+
+    
+    if (invoice !== undefined) {
+
+      const convertedInvoice: InvoiceForm = {
+        id: invoice.id,
+        customer_id: invoice.customer_id,
+        amount: invoice.amount,
+        status: invoice.status, 
+        
+      };
+      return convertedInvoice;
+      
+    }else{
+      const convertedInvoice: InvoiceForm = {
+        id: '',
+        customer_id: '',
+        amount: 0,
+        status: '', 
+      };
+      return convertedInvoice;
+    }
+     
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');

@@ -1,16 +1,17 @@
 // Faturas
+
 const invoices = [
-    { id: "1", customer_id: "1", amount: 100, date: "2024-03-01", status: "pending" },
-    { id: "2", customer_id: "2", amount: 200, date: "2024-03-02", status: "paid" },
-    { id: "3", customer_id: "3", amount: 150, date: "2024-03-03", status: "pending" },
-    { id: "4", customer_id: "4", amount: 300, date: "2024-03-04", status: "paid" },
-    { id: "5", customer_id: "5", amount: 250, date: "2024-03-05", status: "pending" },
-    { id: "6", customer_id: "6", amount: 180, date: "2024-03-06", status: "pending" },
-    { id: "7", customer_id: "7", amount: 400, date: "2024-03-07", status: "paid" },
-    { id: "8", customer_id: "8", amount: 220, date: "2024-03-08", status: "pending" },
-    { id: "9", customer_id: "9", amount: 270, date: "2024-03-09", status: "paid" },
-    { id: "10", customer_id: "10", amount: 350, date: "2024-03-10", status: "pending" }
-  ];
+  { id: "1", customer_id: "1", amount: 100, date: "2024-03-01", status: "pending" },
+  { id: "2", customer_id: "2", amount: 200, date: "2024-03-02", status: "paid" },
+  { id: "3", customer_id: "3", amount: 150, date: "2024-03-03", status: "pending" },
+  { id: "4", customer_id: "4", amount: 300, date: "2024-03-04", status: "paid" },
+  { id: "5", customer_id: "5", amount: 250, date: "2024-03-05", status: "pending" },
+  { id: "6", customer_id: "6", amount: 180, date: "2024-03-06", status: "pending" },
+  { id: "7", customer_id: "7", amount: 400, date: "2024-03-07", status: "paid" },
+  { id: "8", customer_id: "8", amount: 220, date: "2024-03-08", status: "pending" },
+  { id: "9", customer_id: "9", amount: 270, date: "2024-03-09", status: "paid" },
+  { id: "10", customer_id: "10", amount: 350, date: "2024-03-10", status: "pending" }
+];
 
   const latestInvoices = [
     {
