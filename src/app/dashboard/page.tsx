@@ -1,22 +1,15 @@
 import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
-import { fetchRevenue , fetchLatestInvoices } from '@/app/lib/data';
+import { fetchRevenue , fetchLatestInvoices, fetchCardData } from '@/app/lib/data';
 
-import  invoicesData   from '../../../scripts/invoices';
-import  customersData   from '../../../scripts/customers';
 
  
 export default async function Page() {
   const revenues = await fetchRevenue();
   const latestInvoices = await fetchLatestInvoices();
+  const data = await fetchCardData();
 
-  const totalInvoices = invoicesData.invoices.length;
-  const totalCustomers = customersData.customers.length;
-
-
-  const customerCountTotalPaid = customersData.total_paid_invoices; 
-  const customerCountTotalPending = customersData.total_pending_invoices; 
 
 
   return (
@@ -25,12 +18,12 @@ export default async function Page() {
         Dashboard
       </h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <Card title="Collected" value={customerCountTotalPaid} type="collected" />
-        <Card title="Pending" value={customerCountTotalPending} type="pending" />
-        <Card title="Total Invoices" value={totalInvoices} type="invoices" />
+        <Card title="Collected" value={data[3]} type="collected" />
+        <Card title="Pending" value={data[2]} type="pending" />
+        <Card title="Total Invoices" value={data[1]} type="invoices" />
         <Card
           title="Total Customers"
-          value={totalCustomers}
+          value={data[0]}
           type="customers"
         />
       </div>

@@ -14,11 +14,12 @@ import { formatCurrency } from './utils';
 
 
 import customers from '../../../scripts/customers';
-import  invoicesData  from '../../../scripts/invoices';
+
 import revenue from '../../../scripts/revenue';
 import users from '../../../scripts/users';
 
-
+import  invoicesData  from '../../../scripts/invoices';
+import  customersData   from '../../../scripts/customers';
 
 
 export async function fetchRevenue() {
@@ -96,12 +97,28 @@ export async function fetchCardData() {
     // const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
     // const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
 
-    // return {
-    //   numberOfCustomers,
-    //   numberOfInvoices,
-    //   totalPaidInvoices,
-    //   totalPendingInvoices,
-    // };
+
+     const totalInvoices = invoicesData.invoices.length;
+     const totalCustomers = customersData.customers.length;
+     const customerCountTotalPaid = customersData.total_paid_invoices; 
+     const customerCountTotalPending = customersData.total_pending_invoices; 
+
+    //  return {
+    //    totalCustomers,
+    //    totalInvoices,
+    //    customerCountTotalPaid,
+    //    customerCountTotalPending,
+    //  };
+
+
+     const data = await Promise.all([
+       totalCustomers,
+       totalInvoices,
+       customerCountTotalPaid,
+       customerCountTotalPending,
+    ]);
+
+    return data;
 
 
   } catch (error) {

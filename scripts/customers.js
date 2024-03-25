@@ -158,5 +158,6 @@ const customers = [
 
   const total_pending_invoices = customersTable.reduce((total, fatura) => total + fatura.total_pending, 0);
   const total_paid_invoices = customersTable.reduce((total, fatura) => total + fatura.total_paid, 0);
+  const total_invoices = total_pending_invoices + total_paid_invoices;
 
-export default { customers, customerFields, formattedCustomersTable , total_pending_invoices, total_paid_invoices} ;
+export default { customers, customerFields, formattedCustomersTable , total_pending_invoices, total_paid_invoices, total_invoices} ;
