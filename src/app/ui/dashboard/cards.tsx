@@ -1,9 +1,18 @@
+"use client"
+
+import React, { useState, useEffect } from 'react';
+
 import {
   BanknotesIcon,
   ClockIcon,
   UserGroupIcon,
   InboxIcon,
 } from '@heroicons/react/24/outline';
+import { fetchCardData } from '@/app/lib/data';
+import {
+  CardsSkeleton,
+} from '@/app/ui/skeletons';
+
 
 
 const iconMap = {
@@ -13,19 +22,41 @@ const iconMap = {
   invoices: InboxIcon,
 };
 
-export default async function CardWrapper() {
+export default function CardWrapper() {
+
+  const dataObject = {
+    totalCustomers: 0,
+    totalInvoices: 0,
+    customerCountTotalPaid: 0,
+    customerCountTotalPending: 0
+};
+
+  const [data, setData] = useState<typeof dataObject | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const cardsData = await fetchCardData();
+      setData(cardsData);
+    }
+
+    fetchData();
+  }, []);
+
+  if (!data ) {
+    return <CardsSkeleton />;
+  }
+
+
   return (
     <>
-      {/* NOTE: comment in this code when you get to this point in the course */}
-
-      {/* <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
-      /> */}
+     <Card title="Collected" value={data.customerCountTotalPaid} type="collected" />
+        <Card title="Pending" value={data.customerCountTotalPending} type="pending" />
+        <Card title="Total Invoices" value={data.totalInvoices} type="invoices" />
+        <Card
+          title="Total Customers"
+          value={data.totalCustomers}
+          type="customers"
+        />
     </>
   );
 }

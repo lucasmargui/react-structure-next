@@ -1,12 +1,31 @@
+"use client"
+
+import React, { useState, useEffect } from 'react';
+
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { LatestInvoice } from '@/app/lib/definitions';
-export default function LatestInvoices({
-  latestInvoices,
-}: {
-  latestInvoices: LatestInvoice[];
-}) {
+
+import { fetchLatestInvoices } from '@/app/lib/data';
+import { LatestInvoicesSkeleton } from '@/app/ui/skeletons';
+
+export default function LatestInvoices() {
+  const [latestInvoices, setRevenue] = useState<{ amount: string; image_url: string; id:string, name:string, email:string }[] | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const latestInvoicesData = await fetchLatestInvoices();
+      setRevenue(latestInvoicesData);
+    }
+
+    fetchData();
+  }, []);
+
+  if (!latestInvoices || latestInvoices.length === 0) {
+    return <LatestInvoicesSkeleton />;
+  }
+  
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`mb-4 text-xl md:text-2xl`}>
