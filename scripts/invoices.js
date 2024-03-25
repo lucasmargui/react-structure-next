@@ -350,7 +350,7 @@ const invoices = [
     ...invoice,
     image_url:selectRandomItem(listImages)
   }));
-  const modifiedInvoicesTable = latestInvoicesRaw.map(invoice => ({
+  const modifiedInvoicesTable = invoicesTable.map(invoice => ({
     ...invoice,
     image_url:selectRandomItem(listImages)
   }));

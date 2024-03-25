@@ -1,17 +1,46 @@
+
+"use client"
+
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
 
-export default async function InvoicesTable({
+import { fetchFilteredInvoices } from '@/app/lib/data';
+import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+
+import {
+
+  InvoicesTableD,
+
+} from '@/app/lib/definitions';
+
+export default function InvoicesTable({
   query,
   currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const invoices = await fetchFilteredInvoices(query, currentPage);
+
+
+
+  const [invoices, setRevenue] = useState<InvoicesTableD[] | null>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const invoicesData = await fetchFilteredInvoices(query,currentPage);
+      setRevenue(invoicesData);
+    }
+
+    fetchData();
+  }, []);
+
+  if (!invoices || invoices.length === 0) {
+    return <InvoicesTableSkeleton  />;
+  }
+
 
   return (
     <div className="mt-6 flow-root">

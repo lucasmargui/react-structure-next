@@ -3,7 +3,8 @@ import {
   CustomerField,
   CustomersTableType,
   InvoiceForm,
-  InvoicesTable,
+  InvoicesTableD,
+  Invoice,
   LatestInvoiceRaw,
   User,
   Revenue,
@@ -144,7 +145,26 @@ export async function fetchCardData() {
   }
 }
 
+
+
+
+
+
 const ITEMS_PER_PAGE = 6;
+
+function matchesQuery(invoice:InvoicesTableD, query: string) {
+  
+  return (
+      invoice.name.toString().includes(query) ||
+      invoice.email.toString().includes(query) ||
+      invoice.amount.toString().includes(query) ||
+      invoice.date.toString().includes(query) ||
+      invoice.status.toLowerCase().includes(query.toLowerCase())
+  );
+}
+
+
+
 export async function fetchFilteredInvoices(
   query: string,
   currentPage: number,
@@ -176,6 +196,20 @@ export async function fetchFilteredInvoices(
     //   LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     // `;
 
+    // Função para realizar a busca de acordo com os critérios
+
+
+  // Filtrar a lista de faturas de acordo com o critério de busca
+  const filteredInvoices = invoicesData.modifiedInvoicesTable.filter(invoice => matchesQuery(invoice, query));
+
+  // Aplicar ordenação e paginação
+  const sortedAndPaginatedInvoices = filteredInvoices
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())// Ordenar por data decrescente
+      .slice(offset, offset + ITEMS_PER_PAGE); // Paginação
+
+  return sortedAndPaginatedInvoices;
+
+
     // return invoices.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -199,8 +233,8 @@ export async function fetchInvoicesPages(query: string) {
   //     invoices.status ILIKE ${`%${query}%`}
   // `;
 
-  //   const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
-  //   return totalPages;
+     const totalPages = Math.ceil(Number(invoicesData.modifiedInvoicesTable.length / ITEMS_PER_PAGE));
+    return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of invoices.');
