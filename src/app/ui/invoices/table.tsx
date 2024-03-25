@@ -24,8 +24,6 @@ export default function InvoicesTable({
   currentPage: number;
 }) {
 
-
-
   const [invoices, setRevenue] = useState<InvoicesTableD[] | null>(null);
 
   useEffect(() => {
