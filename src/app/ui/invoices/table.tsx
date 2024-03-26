@@ -33,7 +33,7 @@ export default function InvoicesTable({
     }
 
     fetchData();
-  }, []);
+  }, [query, currentPage]);
 
   if (!invoices || invoices.length === 0) {
     return <InvoicesTableSkeleton  />;
